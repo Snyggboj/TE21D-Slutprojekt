@@ -12,9 +12,11 @@ public class Canvas extends Window implements MouseListener {
     int canvasHeight;
     int rows;
     int columns;
+    private Color pickedColor = Color.black;
+    private Color backgroundColor = Color.white;
 
     // Constructor
-    public Canvas(){
+    public Canvas(Color backgroundColor){
         super(600, 400, "Canvas");
         this.setResizable(false);
         this.getContentPane().setBackground(Color.gray);
@@ -22,6 +24,8 @@ public class Canvas extends Window implements MouseListener {
         this.canvasHeight = 400 - (2 * border);
         this.rows = canvasHeight/10;
         this.columns = canvasWidth/10;
+        this.backgroundColor = backgroundColor;
+
         createCanvas();
         setVisible(true);
     }
@@ -32,7 +36,7 @@ public class Canvas extends Window implements MouseListener {
         canvasPanel.setLayout(new GridLayout(rows, columns));
 
         for(int i = 0; i < rows * columns; i++){
-            canvasPanel.add(new Pixel(canvasHeight/rows));
+            canvasPanel.add(new Pixel(canvasHeight/rows, backgroundColor, pickedColor));
         }
         this.add(canvasPanel);
     }
