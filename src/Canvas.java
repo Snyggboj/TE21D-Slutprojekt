@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class Canvas extends Window implements MouseListener {
     // Attributes
@@ -13,7 +14,8 @@ public class Canvas extends Window implements MouseListener {
     int rows;
     int columns;
     private Color pickedColor = Color.black;
-    private Color backgroundColor = Color.white;
+    private Color backgroundColor;
+    ArrayList<Pixel> canvasPixels = new ArrayList<Pixel>();
 
     // Constructor
     public Canvas(Color backgroundColor){
@@ -36,7 +38,9 @@ public class Canvas extends Window implements MouseListener {
         canvasPanel.setLayout(new GridLayout(rows, columns));
 
         for(int i = 0; i < rows * columns; i++){
-            canvasPanel.add(new Pixel(canvasHeight/rows, backgroundColor, pickedColor));
+            Pixel canvasPixel = new Pixel(canvasHeight/rows, backgroundColor, pickedColor);
+            canvasPixels.add(canvasPixel);
+            canvasPanel.add(canvasPixel);
         }
         this.add(canvasPanel);
     }

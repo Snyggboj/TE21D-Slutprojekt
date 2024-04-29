@@ -15,28 +15,38 @@ public class Settings extends Window{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLayout(new FlowLayout());
         createBackgroundPicker();
+        createCanvas();
         createColorPicker();
         createDrawModePicker();
-        createCanvas();
         this.setVisible(true);
     }
 
     private void createDrawModePicker() {
+
     }
 
     private void createColorPicker() {
-
+        this.add(new ColorButton(Color.black, "Black", this, false));
+        this.add(new ColorButton(Color.white, "White", this, false));
+        this.add(new ColorButton(Color.gray, "Gray", this, false));
+        this.add(new ColorButton(Color.blue, "Blue", this, false));
+        this.add(new ColorButton(Color.green, "Green", this, false));
+        this.add(new ColorButton(Color.red, "Red", this, false));
+        this.add(new ColorButton(Color.yellow, "Yellow", this, false));
+        this.add(new ColorButton(Color.orange, "Orange", this, false));
+        this.add(createRGBColorPicker(pickedColor));
     }
 
     private void createBackgroundPicker() {
-        this.add(new ColorButton(Color.white, "White", this));
-        this.add(new ColorButton(Color.black, "Black", this));
-        this.add(new ColorButton(Color.gray, "Gray", this));
-        this.add(new ColorButton(new Color(225,198,153), "Beige", this));
-        this.add(createRGBColorPicker());
+        this.add(new ColorButton(Color.white, "White", this, true));
+        this.add(new ColorButton(Color.black, "Black", this, true));
+        this.add(new ColorButton(Color.gray, "Gray", this, true));
+        this.add(new ColorButton(new Color(225,198,153), "Beige", this, true));
+        this.add(createRGBColorPicker(backgroundColor));
     }
 
-    private JPanel createRGBColorPicker() {
+    private JPanel createRGBColorPicker(Color neededColor) {
+
         JPanel rgbPicker = new JPanel();
         rgbPicker.setLayout(new FlowLayout());
 
@@ -60,10 +70,13 @@ public class Settings extends Window{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    backgroundColor = new Color(Integer.parseInt(r.getText()), Integer.parseInt(g.getText()), Integer.parseInt(b.getText()));
+                    if (neededColor == backgroundColor){
+                        backgroundColor = new Color(Integer.parseInt(r.getText()), Integer.parseInt(g.getText()), Integer.parseInt(b.getText()));
+                    } else {
+                        pickedColor = new Color(Integer.parseInt(r.getText()), Integer.parseInt(g.getText()), Integer.parseInt(b.getText()));
+                    }
                 } catch (Exception a){
                     JOptionPane.showMessageDialog(null, "Not a color");
-
                 }
             }
         });
@@ -85,5 +98,9 @@ public class Settings extends Window{
 
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+
+    public void setPickedColor(Color pickedColor) {
+        this.pickedColor = pickedColor;
     }
 }
