@@ -5,7 +5,7 @@ import java.awt.event.MouseListener;
 
 public class Pixel extends JPanel implements MouseListener{
     private boolean painted = false;
-    private boolean erase = false;
+    private boolean erase;
     private Color pickedColor;
     private Color backgroundColor;
     public Pixel(int panelsize, Color backgroundColor, Color pickedColor){
@@ -21,8 +21,10 @@ public class Pixel extends JPanel implements MouseListener{
         System.out.println("click");
         if (painted && erase){
             setBackground(backgroundColor);
-        } else {
+            painted = false;
+        } else if(!erase) {
             setBackground(pickedColor);
+            painted = true;
         }
     }
 
@@ -44,5 +46,17 @@ public class Pixel extends JPanel implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public void setPickedColor(Color pickedColor) {
+        this.pickedColor = pickedColor;
+    }
+
+    public void setErase(boolean erase) {
+        this.erase = erase;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 }

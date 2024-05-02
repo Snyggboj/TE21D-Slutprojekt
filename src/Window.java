@@ -13,6 +13,7 @@ public class Window extends JFrame{
         this.width = width;
         this.height = height;
         this.setSize(width, height);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle(title);
         this.setLayout(new FlowLayout());

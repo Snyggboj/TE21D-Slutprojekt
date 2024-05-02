@@ -15,8 +15,20 @@ public class ColorButton extends JButton {
             public void actionPerformed(ActionEvent e) {
                 if (background){
                     picker.setBackgroundColor(color);
+                    for (int i1 = 0; i1 < picker.canvases.size(); i1++){
+                        for (int i2 = 0; i2 < picker.canvases.get(i1).canvasPixels.size(); i2++){
+                            picker.canvases.get(i1).canvasPixels.get(i2).setBackgroundColor(color);
+                        }
+                    }
+                    picker.colorShow.setBackground(color);
                 } else {
                     picker.setPickedColor(color);
+                    for (int i1 = 0; i1 < picker.canvases.size(); i1++){
+                        picker.canvases.get(i1).colorShowcase.setBackground(color);
+                        for (int i2 = 0; i2 < picker.canvases.get(i1).canvasPixels.size(); i2++){
+                            picker.canvases.get(i1).canvasPixels.get(i2).setPickedColor(color);
+                        }
+                    }
                 }
             }
         });
