@@ -7,11 +7,11 @@ import java.util.ArrayList;
 // Class for settings window, subclass to Window
 public class Settings extends Window{
     // Attributes
-    Color backgroundColor = Color.white;
-    Color pickedColor;
-    ArrayList<Canvas> canvases = new ArrayList<Canvas>();
-    JPanel colorShow = new JPanel();
-    boolean erase;
+    private Color backgroundColor = Color.white;
+    private Color pickedColor;
+    private ArrayList<Canvas> canvases = new ArrayList<Canvas>();
+    private JPanel colorShow = new JPanel();
+    private boolean erase;
 
     // Constructor
     public Settings(){
@@ -50,7 +50,7 @@ public class Settings extends Window{
         this.add(drawModePicker);
     }
 
-    public void buttonActions(JButton brushButton, JButton eraseButton, JButton clearButton){
+    private void buttonActions(JButton brushButton, JButton eraseButton, JButton clearButton){
         brushButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,7 +72,7 @@ public class Settings extends Window{
     }
 
     // Method that sets draw mode to brush
-    public void brushPressed(JButton brushButton, JButton eraseButton, JButton clearButton){
+    private void brushPressed(JButton brushButton, JButton eraseButton, JButton clearButton){
         // Sets erase to false on each pixel in all canvases
         for (int i1 = 0; i1 < canvases.size(); i1++){
             for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
@@ -87,7 +87,7 @@ public class Settings extends Window{
     }
 
     // Method that sets draw mode to erase
-    public void erasePressed(JButton brushButton, JButton eraseButton, JButton clearButton){
+    private void erasePressed(JButton brushButton, JButton eraseButton, JButton clearButton){
         // Sets erase to true on each pixel in all canvases
         for (int i1 = 0; i1 < canvases.size(); i1++){
             for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
@@ -102,7 +102,7 @@ public class Settings extends Window{
     }
 
     // Method that clears the entire canvas
-    public void clearPressed(){
+    private void clearPressed(){
         // Sets each pixels background color back to the canvases background color
         for (int i1 = 0; i1 < canvases.size(); i1++){
             for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
@@ -182,7 +182,7 @@ public class Settings extends Window{
         return rgbPicker;
     }
 
-    public void assignRGB(Color neededColor, JTextField r, JTextField g, JTextField b){
+    private void assignRGB(Color neededColor, JTextField r, JTextField g, JTextField b){
         try{
             Color rgbColor = new Color(Integer.parseInt(r.getText()), Integer.parseInt(g.getText()), Integer.parseInt(b.getText()));
             if (neededColor == backgroundColor){
@@ -214,7 +214,7 @@ public class Settings extends Window{
     }
 
     // Creates the canvas window
-    public void createCanvas(){
+    private void createCanvas(){
         JPanel create = new JPanel();
         create.setLayout(new FlowLayout());
 
@@ -238,7 +238,7 @@ public class Settings extends Window{
     }
 
     // Methods that creates an instance of the class Canvas
-    public void createCanvasWindow(){
+    private void createCanvasWindow(){
         Canvas canvas = new Canvas(backgroundColor);
         // Sets all the pictures to the same erase as the window erase
         for (int i = 0; i < canvas.getCanvasPixels().size(); i++){
@@ -255,5 +255,13 @@ public class Settings extends Window{
 
     public void setPickedColor(Color pickedColor) {
         this.pickedColor = pickedColor;
+    }
+
+    public ArrayList<Canvas> getCanvases() {
+        return canvases;
+    }
+
+    public JPanel getColorShow() {
+        return colorShow;
     }
 }

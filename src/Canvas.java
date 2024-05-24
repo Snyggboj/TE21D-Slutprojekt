@@ -32,7 +32,7 @@ public class Canvas extends Window{
 
     // Methods
     // Method that creates a canvas by creating a JPanel with a grid of Pixels
-    public void createCanvas(){
+    private void createCanvas(){
         // Create JPanel and set size and layout
         JPanel canvasPanel = new JPanel();
         canvasPanel.setSize(canvasWidth, canvasHeight);
@@ -50,7 +50,7 @@ public class Canvas extends Window{
     }
 
     // Method that creates a little box to see what color the user is drawing with
-    public void createColorShowcase(){
+    private void createColorShowcase(){
         // Adds JLabel and JPanel with the selected brush color as the background color to the window
         this.add(new JLabel("Color:"));
         colorShowcase.setPreferredSize(new Dimension(50, 20));
