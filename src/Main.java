@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        // Creates window for settings
+        // Creates settings window
         new Settings();
     }
 }

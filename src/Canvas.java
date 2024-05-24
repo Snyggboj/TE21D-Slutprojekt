@@ -6,15 +6,15 @@ import java.util.ArrayList;
 // Class for the canvas window, subclass to Window
 public class Canvas extends Window{
     // Attributes
-    int border = 30;
-    int canvasWidth;
-    int canvasHeight;
-    int rows;
-    int columns;
+    private final int border = 30;
+    private int canvasWidth;
+    private int canvasHeight;
+    private int rows;
+    private int columns;
     private Color pickedColor = Color.black;
     private Color backgroundColor;
-    ArrayList<Pixel> canvasPixels = new ArrayList<Pixel>();
-    JPanel colorShowcase = new JPanel();
+    private ArrayList<Pixel> canvasPixels = new ArrayList<Pixel>();
+    private JPanel colorShowcase = new JPanel();
 
     // Constructor
     public Canvas(Color backgroundColor){
@@ -58,7 +58,16 @@ public class Canvas extends Window{
         this.add(colorShowcase);
     }
 
+    // Getters and setters
     public Color getBackgroundColor() {
         return backgroundColor;
+    }
+
+    public ArrayList<Pixel> getCanvasPixels() {
+        return canvasPixels;
+    }
+
+    public JPanel getColorShowcase() {
+        return colorShowcase;
     }
 }

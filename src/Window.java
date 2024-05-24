@@ -5,9 +5,9 @@ import java.awt.*;
 // Creates window and sets basic settings
 public class Window extends JFrame{
     // Attributes
-    String title;
-    int width;
-    int height;
+    private String title;
+    protected int width;
+    protected int height;
 
     //Constructor
     public Window(int width, int height, String title){

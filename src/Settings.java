@@ -41,58 +41,74 @@ public class Settings extends Window{
         erase = false;
 
         // Adds actionlisteners to all buttons to be able to do an action when clicked
-        brushButton.addActionListener(new ActionListener() {
-            // Method that sets draw mode to brush
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Sets erase to false on each pixel in all canvases
-                for (int i1 = 0; i1 < canvases.size(); i1++){
-                    for (int i2 = 0; i2 < canvases.get(i1).canvasPixels.size(); i2++){
-                        canvases.get(i1).canvasPixels.get(i2).setErase(false);
-                    }
-                }
-                // Disable button and enable all other buttons and set erase in this class to false
-                brushButton.setEnabled(false);
-                eraseButton.setEnabled(true);
-                clearButton.setEnabled(true);
-                erase = false;
-            }
-        });
-        eraseButton.addActionListener(new ActionListener() {
-            // Method that sets draw mode to erase
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Sets erase to true on each pixel in all canvases
-                for (int i1 = 0; i1 < canvases.size(); i1++){
-                    for (int i2 = 0; i2 < canvases.get(i1).canvasPixels.size(); i2++){
-                        canvases.get(i1).canvasPixels.get(i2).setErase(true);
-                    }
-                }
-                // Disable button and enable all other buttons and set erase in this class to true
-                brushButton.setEnabled(true);
-                eraseButton.setEnabled(false);
-                clearButton.setEnabled(true);
-                erase = true;
-            }
-        });
-        clearButton.addActionListener(new ActionListener() {
-            // Method that clears the entire canvas
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Sets each pixels background color back to the canvases background color
-                for (int i1 = 0; i1 < canvases.size(); i1++){
-                    for (int i2 = 0; i2 < canvases.get(i1).canvasPixels.size(); i2++){
-                        canvases.get(i1).canvasPixels.get(i2).setBackground(canvases.get(i1).getBackgroundColor());
-                    }
-                }
-            }
-        });
+        buttonActions(brushButton, eraseButton, clearButton);
 
         // Adds buttons to JPanel and add Panel to window
         drawModePicker.add(brushButton);
         drawModePicker.add(eraseButton);
         drawModePicker.add(clearButton);
         this.add(drawModePicker);
+    }
+
+    public void buttonActions(JButton brushButton, JButton eraseButton, JButton clearButton){
+        brushButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                brushPressed(brushButton, eraseButton, clearButton);
+            }
+        });
+        eraseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                erasePressed(brushButton, eraseButton, clearButton);
+            }
+        });
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearPressed();
+            }
+        });
+    }
+
+    // Method that sets draw mode to brush
+    public void brushPressed(JButton brushButton, JButton eraseButton, JButton clearButton){
+        // Sets erase to false on each pixel in all canvases
+        for (int i1 = 0; i1 < canvases.size(); i1++){
+            for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
+                canvases.get(i1).getCanvasPixels().get(i2).setErase(false);
+            }
+        }
+        // Disable button and enable all other buttons and set erase in this class to false
+        brushButton.setEnabled(false);
+        eraseButton.setEnabled(true);
+        clearButton.setEnabled(true);
+        erase = false;
+    }
+
+    // Method that sets draw mode to erase
+    public void erasePressed(JButton brushButton, JButton eraseButton, JButton clearButton){
+        // Sets erase to true on each pixel in all canvases
+        for (int i1 = 0; i1 < canvases.size(); i1++){
+            for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
+                canvases.get(i1).getCanvasPixels().get(i2).setErase(true);
+            }
+        }
+        // Disable button and enable all other buttons and set erase in this class to true
+        brushButton.setEnabled(true);
+        eraseButton.setEnabled(false);
+        clearButton.setEnabled(true);
+        erase = true;
+    }
+
+    // Method that clears the entire canvas
+    public void clearPressed(){
+        // Sets each pixels background color back to the canvases background color
+        for (int i1 = 0; i1 < canvases.size(); i1++){
+            for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
+                canvases.get(i1).getCanvasPixels().get(i2).setBackground(canvases.get(i1).getBackgroundColor());
+            }
+        }
     }
 
     // Method that creates a color picker for brush color
@@ -145,11 +161,9 @@ public class Settings extends Window{
         rgbPicker.add(new JLabel("R"));
         JTextField r = new JTextField(3);
         rgbPicker.add(r);
-
         rgbPicker.add(new JLabel("G"));
         JTextField g = new JTextField(3);
         rgbPicker.add(g);
-
         rgbPicker.add(new JLabel("B"));
         JTextField b = new JTextField(3);
         rgbPicker.add(b);
@@ -161,38 +175,42 @@ public class Settings extends Window{
             // Then assigns them to needed colors
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    Color rgbColor = new Color(Integer.parseInt(r.getText()), Integer.parseInt(g.getText()), Integer.parseInt(b.getText()));
-                    if (neededColor == backgroundColor){
-                        backgroundColor = rgbColor;
-                        for (int i1 = 0; i1 < canvases.size(); i1++){
-                            for (int i2 = 0; i2 < canvases.get(i1).canvasPixels.size(); i2++){
-                                canvases.get(i1).canvasPixels.get(i2).setBackgroundColor(rgbColor);
-                            }
-                        }
-                        colorShow.setBackground(rgbColor);
-                    } else {
-                        pickedColor = rgbColor;
-                        for (int i1 = 0; i1 < canvases.size(); i1++){
-                            canvases.get(i1).colorShowcase.setBackground(rgbColor);
-                            for (int i2 = 0; i2 < canvases.get(i1).canvasPixels.size(); i2++){
-                                canvases.get(i1).canvasPixels.get(i2).setPickedColor(rgbColor);
-                            }
-                        }
-                    }
-                } catch (Exception a){
-                    // If inputs are invalid it messages the user
-                    JOptionPane.showMessageDialog(null, "Not a color");
-                }
-
-                // Resets input fields
-                r.setText("");
-                g.setText("");
-                b.setText("");
+                assignRGB(neededColor, r, g, b);
             }
         });
         rgbPicker.add(chooseButton);
         return rgbPicker;
+    }
+
+    public void assignRGB(Color neededColor, JTextField r, JTextField g, JTextField b){
+        try{
+            Color rgbColor = new Color(Integer.parseInt(r.getText()), Integer.parseInt(g.getText()), Integer.parseInt(b.getText()));
+            if (neededColor == backgroundColor){
+                backgroundColor = rgbColor;
+                for (int i1 = 0; i1 < canvases.size(); i1++){
+                    for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
+                        canvases.get(i1).getCanvasPixels().get(i2).setBackgroundColor(rgbColor);
+                    }
+                }
+                colorShow.setBackground(rgbColor);
+            } else {
+                pickedColor = rgbColor;
+                for (int i1 = 0; i1 < canvases.size(); i1++){
+                    canvases.get(i1).getColorShowcase().setBackground(rgbColor);
+                    for (int i2 = 0; i2 < canvases.get(i1).getCanvasPixels().size(); i2++){
+                        canvases.get(i1).getCanvasPixels().get(i2).setPickedColor(rgbColor);
+                    }
+                }
+            }
+        } catch (Exception a){
+            // If inputs are invalid it messages the user
+            JOptionPane.showMessageDialog(null, "Not a color");
+        }
+
+        // Resets input fields
+        r.setText("");
+        g.setText("");
+        b.setText("");
     }
 
     // Creates the canvas window
@@ -203,16 +221,9 @@ public class Settings extends Window{
         // Adds button to create a new canvas and an actionlistener to the button
         JButton createCanvasButton = new JButton("Create canvas");
         createCanvasButton.addActionListener(new ActionListener() {
-            // Methods that creates an instance of the class Canvas
             @Override
             public void actionPerformed(ActionEvent e) {
-                Canvas canvas = new Canvas(backgroundColor);
-                // Sets all the pictures to the same erase as the window erase
-                for (int i = 0; i < canvas.canvasPixels.size(); i++){
-                    canvas.canvasPixels.get(i).setErase(erase);
-                }
-                // Adds the new canvas to Arraylist canvas
-                canvases.add(canvas);
+                createCanvasWindow();
             }
         });
 
@@ -224,6 +235,17 @@ public class Settings extends Window{
         create.add(colorShow);
         create.add(createCanvasButton);
         this.add(create);
+    }
+
+    // Methods that creates an instance of the class Canvas
+    public void createCanvasWindow(){
+        Canvas canvas = new Canvas(backgroundColor);
+        // Sets all the pictures to the same erase as the window erase
+        for (int i = 0; i < canvas.getCanvasPixels().size(); i++){
+            canvas.getCanvasPixels().get(i).setErase(erase);
+        }
+        // Adds the new canvas to Arraylist canvas
+        canvases.add(canvas);
     }
 
     // Getters and Setters
